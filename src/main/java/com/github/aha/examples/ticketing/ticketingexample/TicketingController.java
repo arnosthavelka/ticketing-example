@@ -66,14 +66,18 @@ public class TicketingController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public  Collection<TicketDTO> list() {
 		int index = 0;
-		data.stream().forEach(t -> t.setOrder(2));
+		for (TicketDTO ticketDTO : data) {
+			ticketDTO.setOrder(index++);
+		}
 		
 		return data;
 	}
 
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public  TicketDTO add() {
-		return createNewTicket();
+		TicketDTO ticket = createNewTicket();
+		ticket.setOrder(data.size() - 1);
+		return ticket;
 	}
 
 	@RequestMapping(value = "/last", method = RequestMethod.DELETE)
