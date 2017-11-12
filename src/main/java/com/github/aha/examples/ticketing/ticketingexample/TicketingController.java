@@ -1,9 +1,10 @@
 package com.github.aha.examples.ticketing.ticketingexample;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -37,13 +38,14 @@ Po smazání posledního bude v seznamu:
 
 Úloha by měla být na cca 1-2 hodin.
  */
+
 @RestController
 @RequestMapping("/ticket")
 public class TicketingController {
 	
 	private int lastId;
 	
-	private Collection<TicketDTO> data;
+	private List<TicketDTO> data;
 	
 	@PostConstruct
 	private void init() {
@@ -80,11 +82,14 @@ public class TicketingController {
 		return ticket;
 	}
 
-	@RequestMapping(value = "/last", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/first", method = RequestMethod.GET)
+	public TicketDTO getActive() {
+		return data.get(0);
+	}
+
+	@RequestMapping(value = "/first", method = RequestMethod.DELETE)
 	public void delete() {
-		int newSize = data.size() - 1;
-		TicketDTO[] newData = Arrays.copyOf(data.toArray(new TicketDTO[newSize]), newSize);
-		data = Arrays.asList(newData);
+		data = data.stream().skip(1).collect(Collectors.toList());
 	}
 
 }
