@@ -38,7 +38,7 @@ Po smazání posledního bude v seznamu:
 Úloha by měla být na cca 1-2 hodin.
  */
 @RestController
-@RequestMapping("/ticketing")
+@RequestMapping("/ticket")
 public class TicketingController {
 	
 	private int lastId;
@@ -62,7 +62,7 @@ public class TicketingController {
 		return ticket;
 	}
 	
-	// http://localhost:8080/ticketing/
+	// http://localhost:8080/ticket/
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public  Collection<TicketDTO> list() {
 		int index = 0;
@@ -73,7 +73,7 @@ public class TicketingController {
 		return data;
 	}
 
-	@RequestMapping(value = "/new", method = RequestMethod.POST)
+	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public  TicketDTO add() {
 		TicketDTO ticket = createNewTicket();
 		ticket.setOrder(data.size() - 1);
